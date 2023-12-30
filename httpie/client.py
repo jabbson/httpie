@@ -116,6 +116,9 @@ def collect_messages(
                     **send_kwargs_merged,
                     **send_kwargs,
                 )
+                query = requests.utils.urlparse(prepared_request.url).hostname
+                remote_host_ip, remote_host_port = response.raw._connection.sock.getpeername()
+                print(f"Connected to {query} ({remote_host_ip}) on port {remote_host_port}\n")
             response._httpie_headers_parsed_at = monotonic()
             expired_cookies += get_expired_cookies(
                 response.headers.get('Set-Cookie', '')
